@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
+using Straitjacket.Harmony;
 
 namespace NewSubnautica
 {
 	[RequireComponent(typeof(SwimBehaviour))]
 	public class AttackPlayerWhenAggressive : CreatureAction
 	{
+		float prio;
+
 		public override float Evaluate(Creature creature)
 		{
 			if ((creature.Aggression.Value > this.aggressionThreshold | Time.time < this.timeStartAttack + this.minAttackDuration) & Time.time > this.timeStopAttack + this.pauseInterval)
@@ -14,7 +17,9 @@ namespace NewSubnautica
 
 				if (p != null && p.CanBeAttacked())
 				{
-					return base.GetEvaluatePriority();
+					prio = creature.Aggression.Value; //base.GetEvaluatePriority();
+
+					return prio;
 				}
 			}
 			return 0f;
@@ -46,6 +51,8 @@ namespace NewSubnautica
 
 		public override void Perform(Creature creature, float deltaTime)
 		{
+			Debugger.Log("attack prio : " + prio);
+
 			ProfilingUtils.BeginSample("CreatureAction::Perform (AttackEcoTarget)");
 
 			if (Time.time > this.timeNextSwim)

@@ -12,7 +12,7 @@ namespace NewSubnautica
     {
         Creature creature;
 
-        public float maxRangeScalar = 10f;
+        public float maxRangeScalar = 20f;
 
         public float aggressionPerSecond = 1f;
 
@@ -42,6 +42,8 @@ namespace NewSubnautica
                     Debugger.Log("Aggr : " + creature.Aggression.Value);
                 }
             }
+
+            //Debugger.Log("Action : " + creature.GetBestAction());
         }
     }
 }

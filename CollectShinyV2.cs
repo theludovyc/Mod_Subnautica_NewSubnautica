@@ -2,6 +2,7 @@
 using ProtoBuf;
 using UnityEngine;
 using UWE;
+using Straitjacket.Harmony;
 
 namespace NewSubnautica
 {
@@ -10,6 +11,8 @@ namespace NewSubnautica
 	[RequireComponent(typeof(SwimBehaviour))]
 	public class CollectShinyV2 : CreatureAction, IProtoTreeEventListener, IManagedLateUpdateBehaviour, IManagedBehaviour
 	{
+		float prio;
+
 		public string GetProfileTag()
 		{
 			return "CollectShiny";
@@ -77,9 +80,12 @@ namespace NewSubnautica
 				this.UpdateShinyTarget();
 				this.timeNextFindShiny = Time.time + this.updateTargetInterval * (1f + 0.2f * UnityEngine.Random.value);
 			}
+
 			if (this.shinyTarget != null && this.shinyTarget.activeInHierarchy)
 			{
-				return base.GetEvaluatePriority();
+				prio = base.GetEvaluatePriority();
+
+				return prio;
 			}
 			return 0f;
 		}
@@ -144,6 +150,8 @@ namespace NewSubnautica
 
 		public override void Perform(Creature creature, float deltaTime)
 		{
+			//Debugger.Log("shiny prio : " + prio);
+
 			if (this.shinyTarget != null)
 			{
 				if (!this.targetPickedUp)
