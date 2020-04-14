@@ -54,6 +54,10 @@
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\Programs\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Programs\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\Programs\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
@@ -63,9 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgressiveWhenSeePlayer.cs" />
+    <Compile Include="AggressiveWhenSeePlayer.cs" />
+    <Compile Include="AttackPlayerWhenAggressive.cs" />
     <Compile Include="CollectShinyV2.cs" />
     <Compile Include="CuriousWhenSeePlayer.cs" />
+    <Compile Include="MeleeAttackV2.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="MyPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

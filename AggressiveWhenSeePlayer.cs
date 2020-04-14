@@ -8,7 +8,7 @@ using Straitjacket.Harmony;
 
 namespace NewSubnautica
 {
-    class AgressiveWhenSeePlayer : MonoBehaviour
+    class AggressiveWhenSeePlayer : MonoBehaviour
     {
         Creature creature;
 

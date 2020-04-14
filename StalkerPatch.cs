@@ -25,10 +25,7 @@ namespace NewSubnautica
 
             foreach (var v in GetComponents<AggressiveWhenSeeTarget>())
             {
-                if (v.targetType == EcoTargetType.Shark)
-                {
-                    Destroy(v);
-                }
+                Destroy(v);
             }
 
             Destroy(GetComponent<PrisonPredatorSwimToPlayer>());
@@ -53,7 +50,15 @@ namespace NewSubnautica
 
             Destroy(co0);
 
-            gameObject.AddComponent<CuriousWhenSeePlayer>();
+            gameObject.AddComponent<AggressiveWhenSeePlayer>();
+
+            gameObject.AddComponent<AttackPlayerWhenAggressive>();
+
+            var ma = GetComponent<MeleeAttack>();
+
+            gameObject.AddComponent<MeleeAttackV2>().copyMeleeAttack(ma);
+
+            Destroy(ma);
         }
 
         void Update()
