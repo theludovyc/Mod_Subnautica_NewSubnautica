@@ -52,13 +52,17 @@ namespace NewSubnautica
 
             gameObject.AddComponent<AggressiveWhenSeePlayer>();
 
-            gameObject.AddComponent<AttackPlayerWhenAggressive>();
+           var apwa = gameObject.AddComponent<AttackPlayerWhenAggressive>();
 
-            var ma = GetComponent<MeleeAttack>();
+            Debugger.Log("apwa : " + apwa.aggressionThreshold);
 
-            gameObject.AddComponent<MeleeAttackV2>().copyMeleeAttack(ma);
+            /*var ma0 = GetComponent<MeleeAttack>();
 
-            Destroy(ma);
+            var ma1 = gameObject.AddComponent<MeleeAttackV2>();
+                
+            ma1.copyMeleeAttack(ma0);
+
+            Destroy(ma0);*/
         }
 
         void Update()
@@ -69,7 +73,7 @@ namespace NewSubnautica
 
                 String s = "";
 
-                foreach (var v in GetComponents<MonoBehaviour>())
+                foreach (var v in GetComponents<Component>())
                 {
                     s += v + "\n";
                 }

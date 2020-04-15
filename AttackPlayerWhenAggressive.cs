@@ -9,6 +9,8 @@ namespace NewSubnautica
 	{
 		float prio;
 
+		public float aggressionThreshold = 0.75f;
+
 		public override float Evaluate(Creature creature)
 		{
 			if ((creature.Aggression.Value > this.aggressionThreshold | Time.time < this.timeStartAttack + this.minAttackDuration) & Time.time > this.timeStopAttack + this.pauseInterval)
@@ -51,7 +53,7 @@ namespace NewSubnautica
 
 		public override void Perform(Creature creature, float deltaTime)
 		{
-			Debugger.Log("attack prio : " + prio);
+			//Debugger.Log("attack prio : " + prio);
 
 			ProfilingUtils.BeginSample("CreatureAction::Perform (AttackEcoTarget)");
 
@@ -93,7 +95,7 @@ namespace NewSubnautica
 
 		public float swimInterval = 0.8f;
 
-		public float aggressionThreshold = 0.75f;
+		
 
 		public float minAttackDuration = 3f;
 

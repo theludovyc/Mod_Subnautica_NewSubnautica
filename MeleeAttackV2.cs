@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UWE;
+using Straitjacket.Harmony;
 
 namespace NewSubnautica
 {
@@ -10,6 +11,8 @@ namespace NewSubnautica
 
 		public virtual void OnTouch(Collider collider)
 		{
+			Debugger.Log("Attack 0");
+
 			if (!base.enabled)
 			{
 				return;
@@ -37,8 +40,12 @@ namespace NewSubnautica
 				return;
 			}
 
+			Debugger.Log("Attack 1");
+
 			if (this.CanBite(target))
 			{
+				Debugger.Log("Attack 2");
+
 				this.timeLastBite = Time.time;
 
 				LiveMixin component2 = target.GetComponent<LiveMixin>();
