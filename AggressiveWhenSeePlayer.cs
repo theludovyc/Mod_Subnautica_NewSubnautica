@@ -14,7 +14,7 @@ namespace NewSubnautica
 
         public float maxRangeScalar = 20f;
 
-        public float aggressionPerSecond = 0.33f;
+        public float aggressionPerSecond = 0.3f;
 
         void Start()
         {

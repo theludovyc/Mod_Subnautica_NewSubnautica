@@ -30,7 +30,7 @@ namespace NewSubnautica
 
             Destroy(GetComponent<PrisonPredatorSwimToPlayer>());
 
-            Destroy(GetComponent<AttackLastTarget>());
+            
 
             foreach (var v in GetComponents<MoveTowardsTarget>())
             {
@@ -52,9 +52,17 @@ namespace NewSubnautica
 
             gameObject.AddComponent<AggressiveWhenSeePlayer>();
 
-           var apwa = gameObject.AddComponent<AttackPlayerWhenAggressive>();
+            var alt = GetComponent<AttackLastTarget>();
 
-            Debugger.Log("apwa : " + apwa.aggressionThreshold);
+            var alt1 = gameObject.AddComponent<AttackPlayerWhenAggressive>();
+                
+            alt1.copyAttackLastTarget(alt);
+
+            Destroy(alt);
+
+            alt1.minAttackDuration = 1.5f;
+            alt1.maxAttackDuration = 3f;
+            alt1.pauseInterval = 10f;
 
             /*var ma0 = GetComponent<MeleeAttack>();
 

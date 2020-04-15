@@ -7,9 +7,50 @@ namespace NewSubnautica
 	[RequireComponent(typeof(SwimBehaviour))]
 	public class AttackPlayerWhenAggressive : CreatureAction
 	{
-		float prio;
-
 		public float aggressionThreshold = 0.75f;
+
+		public float swimVelocity = 10f;
+
+		public float swimInterval = 0.8f;
+
+		public float minAttackDuration = 3f;
+
+		public float maxAttackDuration = 7f;
+
+		public float pauseInterval = 20f;
+
+		public bool resetAggressionOnTime = true;
+
+		public FMOD_CustomEmitter attackStartSound;
+
+		public VFXController attackStartFXcontrol;
+
+		private float timeStartAttack;
+
+		private float timeStopAttack;
+
+		private float timeNextSwim;
+
+		public void copyAttackLastTarget(AttackLastTarget a)
+		{
+			aggressionThreshold = a.aggressionThreshold;
+
+			swimVelocity = a.swimVelocity;
+
+			swimInterval = a.swimInterval;
+
+			minAttackDuration = a.minAttackDuration;
+
+			maxAttackDuration = a.maxAttackDuration;
+
+			pauseInterval = a.pauseInterval;
+
+			resetAggressionOnTime = a.resetAggressionOnTime;
+
+			attackStartSound = a.attackStartSound;
+
+			attackStartFXcontrol = a.attackStartFXcontrol;
+		}
 
 		public override float Evaluate(Creature creature)
 		{
@@ -19,9 +60,7 @@ namespace NewSubnautica
 
 				if (p != null && p.CanBeAttacked())
 				{
-					prio = creature.Aggression.Value; //base.GetEvaluatePriority();
-
-					return prio;
+					return creature.Aggression.Value;
 				}
 			}
 			return 0f;
@@ -33,22 +72,13 @@ namespace NewSubnautica
 			if (this.attackStartSound)
 			{
 				this.attackStartSound.Play();
+				Debugger.Log("Play sound !");
 			}
 			if (this.attackStartFXcontrol != null)
 			{
 				this.attackStartFXcontrol.Play();
 			}
 			SafeAnimator.SetBool(creature.GetAnimator(), "attacking", true);
-		}
-
-		public override void StopPerform(Creature creature)
-		{
-			SafeAnimator.SetBool(creature.GetAnimator(), "attacking", false);
-			if (this.attackStartFXcontrol != null)
-			{
-				this.attackStartFXcontrol.Stop();
-			}
-			this.timeStopAttack = Time.time;
 		}
 
 		public override void Perform(Creature creature, float deltaTime)
@@ -76,9 +106,14 @@ namespace NewSubnautica
 			ProfilingUtils.EndSample(null);
 		}
 
-		public void OnMeleeAttack(GameObject target)
+		public override void StopPerform(Creature creature)
 		{
-			this.StopAttack();
+			SafeAnimator.SetBool(creature.GetAnimator(), "attacking", false);
+			if (this.attackStartFXcontrol != null)
+			{
+				this.attackStartFXcontrol.Stop();
+			}
+			this.timeStopAttack = Time.time;
 		}
 
 		protected virtual void StopAttack()
@@ -91,30 +126,9 @@ namespace NewSubnautica
 			}
 		}
 
-		public float swimVelocity = 10f;
-
-		public float swimInterval = 0.8f;
-
-		
-
-		public float minAttackDuration = 3f;
-
-		public float maxAttackDuration = 7f;
-
-		public float pauseInterval = 20f;
-
-		public float rememberTargetTime = 5f;
-
-		public bool resetAggressionOnTime = true;
-
-		public FMOD_CustomEmitter attackStartSound;
-
-		public VFXController attackStartFXcontrol;
-
-		private float timeStartAttack;
-
-		private float timeStopAttack;
-
-		private float timeNextSwim;
+		public void OnMeleeAttack(GameObject target)
+		{
+			this.StopAttack();
+		}
 	}
 }
